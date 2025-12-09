@@ -10,7 +10,6 @@ in
     ./modules/applications.nix
   ];
 
-{
   home.username = "marie";
   home.homeDirectory = "/home/marie";
   programs.git.enable = true;
