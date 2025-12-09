@@ -14,9 +14,6 @@ in
   home.homeDirectory = "/home/marie";
   programs.git.enable = true;
   home.stateVersion = "25.11";
-  home.sessionVariables = {
-  MANPAGER = "nvim +Man!";
-  };
   
   xdg.configFile."alacritty" = {
     source = create_symlink "${dotfiles}/alacritty/";
