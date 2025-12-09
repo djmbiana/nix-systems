@@ -65,6 +65,10 @@ in
         # Custom shell aliases (must be at the zsh level)
         shellAliases = {
           ls = "lsd -Fal";
+          nr = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox";
+          nru = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --upgrade";
+          nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --show-trace";
+          hmu = "home-manager switch --flake ~/nix-systems#nixbox";
         };
 
       initContent = ''
