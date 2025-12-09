@@ -46,38 +46,49 @@ in
    fastfetch
  ];
 
-programs = {
-  zsh = {
-    enable = true;
-    syntaxHighlighting.enable = true;
-    oh-my-zsh.enable = true;
-    oh-my-zsh.theme = "";
-    oh-my-zsh.plugins = [ "git" "npm" "history" "node" "rust" "deno" ];
+ programs = {
+    zsh = {
+        enable = true;
+        syntaxHighlighting.enable = true;
+        oh-my-zsh = {
+            enable = true;
+            theme = "";
+            plugins = [
+                "git"
+                "npm"
+                "history"
+                "node"
+                "rust"
+                "deno"
+            ];
+        };
+        # Custom shell aliases (must be at the zsh level)
+        shellAliases = {
+          ls = "lsd -Fal";
+          nr = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox";
+          nru = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --upgrade";
+          nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --show-trace";
+          hmu = "home-manager switch --flake ~/nix-systems#nixbox";
+          vim = "nvim";
+        };
 
-    shellAliases = {
-      ls   = "lsd -Fal";
-      nr   = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox";
-      nru  = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --upgrade";
-      nrt  = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --show-trace";
-      hmu  = "home-manager switch --flake ~/nix-systems#nixbox";
-      vim  = "neovim";
+      initContent = ''
+        autoload -U colors && colors
+        PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M \
+        %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+      '';
+
     };
 
-    initContent = ''
-      autoload -U colors && colors
-      PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M \
-      %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-    '';
-  };
-
-  man = {
+    man = {
     enable = true;
     pager = "nvim -c 'set ft=man' -";
-  };
+    };
 
-  direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;   # if you use zsh
+      nix-direnv.enable = true;
+    };
   };
-};
+}
