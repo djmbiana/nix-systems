@@ -5,6 +5,7 @@
     gimp
     kdePackages.kdenlive
     cider-2
+    winboat
     obs-studio
   ];
 }
