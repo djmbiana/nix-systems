@@ -1,17 +1,13 @@
 { config, pkgs, ... }:
 
 let
-  dotfiles = "${config.home.homeDirectory}/nixbox-dotfiles/config";
+  dotfiles = "${config.home.homeDirectory}/nix-systems/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in 
 
 
 
 {
-  imports = [
-    ../../modules/applications.nix
-  ];
-
   home.username = "marie";
   home.homeDirectory = "/home/marie";
   programs.git.enable = true;
@@ -21,7 +17,13 @@ in
     source = create_symlink "${dotfiles}/alacritty/";
     recursive = true;
   };
+
+  xdg.configFile."nvim" = {
+    source = create_symlink "${dotfiles}/nvim/";
+    recursive = true;
+  };
   
+
  home.packages = with pkgs; [
    neovim
    emacs
