@@ -68,6 +68,7 @@ in
           nru = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --upgrade";
           nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --show-trace";
           hmu = "home-manager switch --flake ~/nix-systems#nixbox";
+          vim = "neovim";
         };
 
       initContent = ''
@@ -77,9 +78,15 @@ in
       '';  
 
     };
+
+    man = {
+      enable = true;
+      pager = "nvim -c 'set ft=man' -";
+    };
+
     direnv = {
       enable = true;
-      enableZshIntegration = true;   # if you use zsh
+      enableZshIntegration = true;
       nix-direnv.enable = true;
     };
   };
