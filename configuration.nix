@@ -70,9 +70,6 @@
     #media-session.enable = true;
   };
 
-  # Increases Download Buffer
-  download-buffer-size = 524288000
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh = {
    enable = true;
