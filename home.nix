@@ -5,7 +5,10 @@ let
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in 
 
-
+{
+  imports = [
+    ./modules/applications.nix
+  ];
 
 {
   home.username = "marie";
