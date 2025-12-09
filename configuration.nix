@@ -77,6 +77,7 @@
   users.users.marie = {
     isNormalUser = true;
     description = "marie";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
