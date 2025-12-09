@@ -1,0 +1,72 @@
+KLASSY INSTALL
+
+Build & Install:
+cd ~/nixbox-dotfiles/config/klassy
+nix-build -E 'with import <nixpkgs> {}; callPackage ./klassy.nix {}'
+nix-env -i ./result
+
+Restart KDE:
+kwin_x11 --replace &
+kwin_wayland --replace &
+
+Enable:
+Settings → Appearance → Window Decorations → Klassy
+Settings → Appearance → Application Style → Klassy
+
+Uninstall:
+nix-env -e klassy
+
+Update hash:
+nix-prefetch-url --type sha256 --unpack https://github.com/paulmcauley/klassy/archive/refs/tags/6.4.breeze6.4.0.tar.gz
+
+```bash
+nix-build -E 'with import <nixpkgs> {}; callPackage ./klassy.nix {}'
+```
+
+This will:
+- Download the Klassy source code
+- Compile it with all necessary dependencies
+- Create a `result` symlink pointing to the built package
+
+**Note:** This may take a few minutes the first time.
+
+## Step 3: Install Klassy to your user profile
+
+Once the build completes successfully, install it:
+
+```bash
+nix-env -i ./result
+```
+
+This installs Klassy to your user profile (`~/.nix-profile/`), making it available to KDE.
+
+## Step 4: Restart KDE to load the new theme
+
+You have two options:
+
+**Option A: Log out and back in**
+- Simply log out of your KDE session and log back in
+
+**Option B: Restart KWin (faster)**
+
+For X11:
+```bash
+kwin_x11 --replace &
+```
+
+For Wayland:
+```bash
+kwin_wayland --replace &
+```
+
+## Step 5: Enable Klassy in KDE Settings
+
+1. Open **System Settings**
+2. Go to **Appearance** → **Window Decorations**
+3. Select **Klassy** from the list
+4. Click **Apply**
+
+For the application style:
+1. Go to **Appearance** → **Application Style**
+2. Select **Klassy**
+3. Click **Apply**

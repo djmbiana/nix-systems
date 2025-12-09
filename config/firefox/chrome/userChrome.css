@@ -1,0 +1,10 @@
+/* Hide close buttons on all tabs */
+.tabbrowser-tab .tab-close-button {
+    display: none !important;
+}
+
+/* Hide the new tab button on the tab bar */
+#tabs-newtab-button,
+#new-tab-button {
+display: none !important;
+}
