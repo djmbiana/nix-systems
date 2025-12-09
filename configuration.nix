@@ -71,11 +71,9 @@
   };
 
   # Increases Download Buffer
-  {
     nix.settings = {
       "download-buffer-size" = "50M"; 
     }
-  }
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh = {
