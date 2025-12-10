@@ -74,6 +74,7 @@ in
         };
         sessionVariables = {
           MANPAGER = "nvim +Man!";
+          BAT_THEME ="gruvbox-dark";
         };
 
       initContent = ''
@@ -81,13 +82,6 @@ in
         PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M \
         %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
       '';
-    };
-
-    bat = {
-      enable = true;
-      config = {
-        theme = "gruvbox-dark"
-      }
     };
 
     direnv = {
