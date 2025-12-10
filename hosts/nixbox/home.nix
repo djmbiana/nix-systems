@@ -7,7 +7,7 @@ in
 
 {
   imports = [
-    ./modules/applications.nix
+    ../../modules/applications.nix
   ];
 
   home.username = "marie";

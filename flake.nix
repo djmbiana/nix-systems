@@ -12,13 +12,13 @@
     nixosConfigurations.nixbox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./hosts/nixbox/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.marie = import ./home.nix;
+            users.marie = import ./hosts/nixbox/home.nix;
             backupFileExtension = "backup";
           };
         }
