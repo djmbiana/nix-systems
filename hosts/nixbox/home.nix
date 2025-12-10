@@ -74,7 +74,7 @@ in
         };
         sessionVariables = {
           MANPAGER = "nvim +Man!";
-        }
+        };
 
       initContent = ''
         autoload -U colors && colors
@@ -87,7 +87,7 @@ in
       enable = true;
       config = {
         theme = "gruvbox-dark"
-      }
+      };
     };
 
     direnv = {
