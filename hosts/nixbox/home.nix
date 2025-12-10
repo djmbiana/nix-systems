@@ -74,7 +74,7 @@ in
         };
         sessionVariables = {
           MANPAGER = "nvim +Man!";
-          BAT_THEME ="gruvbox-dark";
+          BAT_THEME = "gruvbox-dark";
         };
 
       initContent = ''
