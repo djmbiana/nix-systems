@@ -72,13 +72,22 @@ in
           hmu = "home-manager switch --flake ~/nix-systems#nixbox";
           vim = "nvim";
         };
+        sessionVariables = {
+          MANPAGER = "nvim +Man!";
+        }
 
       initContent = ''
         autoload -U colors && colors
         PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M \
         %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
       '';
+    };
 
+    bat = {
+      enable = true;
+      config = {
+        theme = "gruvbox-dark"
+      }
     };
 
     direnv = {
