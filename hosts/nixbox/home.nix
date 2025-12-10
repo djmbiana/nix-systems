@@ -87,7 +87,7 @@ in
       enable = true;
       config = {
         theme = "gruvbox-dark"
-      };
+      }
     };
 
     direnv = {
