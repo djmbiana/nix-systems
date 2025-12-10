@@ -64,6 +64,7 @@ in
         };
         # Custom shell aliases (must be at the zsh level)
         shellAliases = {
+          e = "emacsclient";
           ls = "lsd -Fal";
           nr = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox";
           nru = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --upgrade";
