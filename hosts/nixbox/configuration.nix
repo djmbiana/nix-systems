@@ -108,6 +108,7 @@
   wget
   tealdeer
   curl
+  vlc
   xclip
   wtype
   wl-clipboard
