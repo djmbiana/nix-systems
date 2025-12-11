@@ -115,7 +115,8 @@ fonts = {
   curl
   vlc
   xclip
-  wtype
+  # wtype (when i switch to sway)
+  ydotool
   wl-clipboard
   dotool
   bat
