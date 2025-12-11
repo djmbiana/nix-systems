@@ -100,6 +100,7 @@ fonts = {
       nerd-fonts.hack
       nerd-fonts.iosevka
       nerd-fonts.ubuntu
+      nerd-fonts.ubuntu-mono
     ];
   };
 
