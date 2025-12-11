@@ -5,6 +5,7 @@
     gimp
     kdePackages.kdenlive
     cider-2
+    libreoffice-qt
     obs-studio
   ];
 }
