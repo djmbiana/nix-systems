@@ -8,6 +8,7 @@ in
 {
   imports = [
     ../../modules/applications.nix
+    ../../modules/emacs-launcher.nix
   ];
 
   home.username = "marie";
