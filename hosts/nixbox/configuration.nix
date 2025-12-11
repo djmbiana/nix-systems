@@ -80,7 +80,7 @@
     isNormalUser = true;
     description = "marie";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "input" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -115,8 +115,7 @@ fonts = {
   curl
   vlc
   xclip
-  # wtype (when i switch to sway)
-  ydotool
+  wtype
   wl-clipboard
   dotool
   bat
@@ -125,24 +124,6 @@ fonts = {
 
   # List services that you want to enable:
   services.flatpak.enable = true;
-
-  # udev rules for ydotool to access /dev/uinput
-  services.udev.extraRules = ''
-    KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
-  '';
-
-  # Enable ydotool service system-wide
-  systemd.user.services.ydotool = {
-    description = "ydotool daemon";
-    wantedBy = [ "default.target" ];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.ydotool}/bin/ydotoold";
-      Restart = "always";
-      RestartSec = 1;
-    };
-  };
-
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
