@@ -93,12 +93,15 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Fonts
-  fonts.packages = with pkgs; [
-    nerd-fonts.hack
-    nerd-fonts.iosevka
-    nerd-fonts.ubuntu
-  ];
+# Fonts
+fonts = {
+  fontDir.enable = true;
+  packages = with pkgs; [
+      nerd-fonts.hack
+      nerd-fonts.iosevka
+      nerd-fonts.ubuntu
+    ];
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
