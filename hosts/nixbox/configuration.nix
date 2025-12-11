@@ -109,6 +109,9 @@
   tealdeer
   curl
   xclip
+  ydotool
+  wl-clipboard
+  dotool
   bat
   alacritty
   ];
