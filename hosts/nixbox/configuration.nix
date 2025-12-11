@@ -109,8 +109,7 @@
   tealdeer
   curl
   xclip
-  ydotool
-  kdotool
+  wtype
   wl-clipboard
   dotool
   bat
