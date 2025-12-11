@@ -40,7 +40,7 @@ in
    libtool
    libvterm
    gnumake
-   libvips
+   vips
    nodejs
    gcc
    fd
