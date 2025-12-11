@@ -110,7 +110,7 @@
   curl
   xclip
   ydotool
-  wtype
+  kdotool
   wl-clipboard
   dotool
   bat
