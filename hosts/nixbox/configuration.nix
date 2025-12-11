@@ -97,6 +97,7 @@
   fonts.packages = with pkgs; [
     nerd-fonts.hack
     nerd-fonts.iosevka
+    nerd-fonts.ubuntu
   ];
 
   # List packages installed in system profile. To search, run:
