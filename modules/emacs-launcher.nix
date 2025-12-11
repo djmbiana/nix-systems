@@ -4,7 +4,7 @@ let
   emacs-launcher = pkgs.buildGoModule {
     pname = "emacs-launcher";
     version = "1.0.0";
-    src = ../scripts;  # Relative path to scripts directory
+    src = ../config/scripts;  # Relative path to scripts directory
     vendorHash = null;
 
     buildPhase = ''
