@@ -39,6 +39,7 @@ in
    cmake
    libtool
    libvterm
+   vips
    gnumake
    nodejs
    gcc
