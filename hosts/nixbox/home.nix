@@ -38,7 +38,7 @@ in
    nil
    nixpkgs-fmt
    imagemagick
-   poppler_utils
+   poppler-utils
    fd
    gnutar
    cmake
