@@ -34,8 +34,13 @@ in
    stylua
    ripgrep
    ffmpeg
+   ffmpegthumbnailer
    nil
    nixpkgs-fmt
+   imagemagick
+   poppler_utils
+   fd
+   gnutar
    cmake
    libtool
    libvterm
