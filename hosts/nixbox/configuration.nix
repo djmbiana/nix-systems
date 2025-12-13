@@ -119,10 +119,11 @@ fonts = {
   vim
   wget
   niri
-  thunar
+  xfce.thunar
   grim
   slurp
   wmenu
+  foot
   xwayland-satellite
   fuzzel
   swaybg
