@@ -45,7 +45,7 @@
   programs.niri.enable = true;
 
   # Enable XFCE
-  services.displayManager.xfce.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.ly.enable = true;
