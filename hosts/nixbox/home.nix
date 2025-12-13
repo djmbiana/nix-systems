@@ -40,6 +40,7 @@ in
    ripgrep
    ffmpeg
    ffmpegthumbnailer
+   pwvucontrol
    nil
    nixpkgs-fmt
    imagemagick
