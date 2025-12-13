@@ -16,7 +16,7 @@ in
   programs.git.enable = true;
   home.stateVersion = "25.11";
 
-  xdg.configFile."alacritty" = {
+  xdg.configFile."niri" = {
     source = create_symlink "${dotfiles}/niri/";
     recursive = true;
   };
