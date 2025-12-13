@@ -95,7 +95,9 @@
 
   # Install firefox.
   programs.firefox.enable = true;
-  programs.waybar.enable = true;
+
+  # waybar
+  programs.waybar.enable = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -120,6 +122,7 @@ fonts = {
   wget
   niri
   xfce.thunar
+  waybar
   grim
   slurp
   foot
