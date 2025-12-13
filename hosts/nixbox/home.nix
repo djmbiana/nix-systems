@@ -26,6 +26,11 @@ in
     recursive = true;
   };
 
+  xdg.configFile."foot" = {
+    source = create_symlink "${dotfiles}/foot/";
+    recursive = true;
+  };
+
   xdg.configFile."nvim" = {
     source = create_symlink "${dotfiles}/nvim/";
     recursive = true;
