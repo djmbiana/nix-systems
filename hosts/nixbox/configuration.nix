@@ -45,7 +45,7 @@
   programs.niri.enable = true;
 
   # Enable XFCE
-  services.xserver.desktopManager.xfce.enable = true;
+  # services.xserver.desktopManager.xfce.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.ly.enable = true;
@@ -119,6 +119,10 @@ fonts = {
   vim
   wget
   niri
+  thunar
+  grim
+  slurp
+  wmenu
   xwayland-satellite
   fuzzel
   swaybg
