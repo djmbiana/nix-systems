@@ -137,7 +137,7 @@ layout {
     focus-ring {
         // How many logical pixels the ring extends out from the windows.
         width 1.5
-        active-color "#7fc8ff"
+        active-color "#770000"
         inactive-color "#505050"
     }
 
@@ -148,7 +148,7 @@ layout {
         off
 
         width 1.5
-        active-color "#ffc87f"
+        active-color "#770000"
         inactive-color "#505050"
 
         // Color of the border around windows that request your attention.
@@ -289,7 +289,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Mod+Shift+B hotkey-overlay-title="Run an Application: firefox" { spawn "firefox"; }
@@ -531,6 +531,15 @@ binds {
     Mod+Shift+S { spawn "sh" "-c" "PATH=/run/current-system/sw/bin:$PATH /home/marie/nix-systems/config/scripts/snip.sh"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+
+
+    // Emacs binds:
+
+    // Emacs Everywhere - Edit text anywhere
+    Mod+Ctrl+E { spawn "emacsclient" "--eval" "(thanos/type)"; }
+
+    // Dirvish (File browser)
+    Alt+Shift+F { spawn "emacsclient" "--eval" "(progn (select-frame-set-input-focus (selected-frame)) (dirvish))"; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here

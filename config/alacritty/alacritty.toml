@@ -22,5 +22,5 @@ save_to_clipboard = true
 
 [general]
 import = [
-    "./themes/compline.toml"
+    "./themes/vague.toml"
 ]

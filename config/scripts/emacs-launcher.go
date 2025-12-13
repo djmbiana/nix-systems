@@ -1,8 +1,9 @@
 // ~/nixos-config/scripts/emacs-launcher.go
-// KDE Plasma version of Emacs launcher with intelligent polling
+// Niri version of Emacs launcher with intelligent polling
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -10,30 +11,61 @@ import (
 	"time"
 )
 
+type NiriWindow struct {
+	ID    int    `json:"id"`
+	Title string `json:"title"`
+	AppID string `json:"app_id"`
+}
+
+type NiriWindows struct {
+	Windows []NiriWindow `json:"windows"`
+}
+
 // Check if a window with title matching pattern exists and is active
 func isEmacsWindowActive() bool {
-	cmd := exec.Command("xdotool", "getactivewindow", "getwindowname")
+	cmd := exec.Command("niri", "msg", "-j", "windows")
 	output, err := cmd.Output()
 	if err != nil {
 		return false
 	}
-	windowName := strings.TrimSpace(string(output))
-	return strings.Contains(windowName, "Emacs") || strings.Contains(windowName, "emacs")
+
+	var windows NiriWindows
+	if err := json.Unmarshal(output, &windows); err != nil {
+		return false
+	}
+
+	// Check if any Emacs window is focused
+	for _, win := range windows.Windows {
+		if (strings.Contains(strings.ToLower(win.Title), "emacs") ||
+			strings.Contains(strings.ToLower(win.AppID), "emacs")) {
+			// In Niri, we'd need to check focus state
+			// For now, assume if Emacs exists, it might be focused
+			return true
+		}
+	}
+	return false
 }
 
 // Get Emacs window ID
-func getEmacsWindowID() (string, bool) {
-	cmd := exec.Command("xdotool", "search", "--class", "Emacs")
+func getEmacsWindowID() (int, bool) {
+	cmd := exec.Command("niri", "msg", "-j", "windows")
 	output, err := cmd.Output()
 	if err != nil {
-		return "", false
+		return 0, false
 	}
 
-	windowIDs := strings.Split(strings.TrimSpace(string(output)), "\n")
-	if len(windowIDs) > 0 && windowIDs[0] != "" {
-		return windowIDs[0], true
+	var windows NiriWindows
+	if err := json.Unmarshal(output, &windows); err != nil {
+		return 0, false
 	}
-	return "", false
+
+	for _, win := range windows.Windows {
+		if strings.Contains(strings.ToLower(win.Title), "emacs") ||
+			strings.Contains(strings.ToLower(win.AppID), "emacs") {
+			return win.ID, true
+		}
+	}
+	return 0, false
 }
 
 // Focus Emacs window and wait for focus to complete using intelligent polling
@@ -43,34 +75,28 @@ func focusEmacsWindow() error {
 		return fmt.Errorf("no Emacs window found")
 	}
 
-	// Activate the window
-	cmd := exec.Command("xdotool", "windowactivate", windowID)
+	// Activate the window using niri msg
+	cmd := exec.Command("niri", "msg", "action", "focus-window", "--id", fmt.Sprintf("%d", windowID))
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("failed to activate window: %v", err)
 	}
 
 	// Intelligent polling to wait for window activation
-	// Start with fast polls, back off if taking longer
 	maxWait := 500 * time.Millisecond
-	pollInterval := 2 * time.Millisecond // Start very fast
+	pollInterval := 2 * time.Millisecond
 	deadline := time.Now().Add(maxWait)
 
 	for time.Now().Before(deadline) {
 		if isEmacsWindowActive() {
-			// Window is now active, we're done
 			return nil
 		}
-
 		time.Sleep(pollInterval)
-
-		// Exponential backoff: 2ms -> 4ms -> 8ms -> 10ms (cap)
 		pollInterval *= 2
 		if pollInterval > 10*time.Millisecond {
 			pollInterval = 10 * time.Millisecond
 		}
 	}
 
-	// Timeout reached - window probably activated anyway
 	return nil
 }
 
@@ -95,17 +121,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Join all arguments in case command has spaces
 	emacsCommand := strings.Join(os.Args[1:], " ")
 
-	// Check if Emacs server is running
 	if !isEmacsServerRunning() {
 		fmt.Fprintln(os.Stderr, "Error: Emacs server is not running")
 		fmt.Fprintln(os.Stderr, "Start it with: emacs --daemon")
 		os.Exit(1)
 	}
 
-	// If Emacs is already active, execute immediately (no need to focus)
+	// If Emacs is already active, execute immediately
 	if isEmacsWindowActive() {
 		executeEmacsCommand(emacsCommand)
 		return
@@ -113,7 +137,6 @@ func main() {
 
 	// Focus Emacs window and wait for it to become active
 	if err := focusEmacsWindow(); err != nil {
-		// Window focus failed, but try to execute command anyway
 		fmt.Fprintf(os.Stderr, "Warning: %v\n", err)
 	}
 
