@@ -122,7 +122,6 @@ fonts = {
   xfce.thunar
   grim
   slurp
-  wmenu
   foot
   xwayland-satellite
   fuzzel
