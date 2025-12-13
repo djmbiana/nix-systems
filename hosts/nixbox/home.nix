@@ -15,7 +15,13 @@ in
   home.homeDirectory = "/home/marie";
   programs.git.enable = true;
   home.stateVersion = "25.11";
-  
+
+
+  xdg.configFile."niri" = {
+    source = create_symlink "${dotfiles}/niri/";
+    recursive = true;
+  };
+
   xdg.configFile."alacritty" = {
     source = create_symlink "${dotfiles}/alacritty/";
     recursive = true;
