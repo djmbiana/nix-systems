@@ -91,6 +91,8 @@ in
           nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --show-trace";
           hmu = "home-manager switch --flake ~/nix-systems#nixbox";
           vim = "nvim";
+          ns1 = "cd ~/nix-systems/hosts/nixbox/";
+          nsc = "cd ~/nix-systems/config/"
         };
         sessionVariables = {
           MANPAGER = "nvim +Man!";
