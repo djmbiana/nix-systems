@@ -92,7 +92,7 @@ in
           hmu = "home-manager switch --flake ~/nix-systems#nixbox";
           vim = "nvim";
           ns1 = "cd ~/nix-systems/hosts/nixbox/";
-          nsc = "cd ~/nix-systems/config/"
+          nsc = "cd ~/nix-systems/config/";
         };
         sessionVariables = {
           MANPAGER = "nvim +Man!";

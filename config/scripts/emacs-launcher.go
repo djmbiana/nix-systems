@@ -1,5 +1,5 @@
 // ~/nixos-config/scripts/emacs-launcher.go
-// Niri version of Emacs launcher with intelligent polling
+// Enhanced Niri version with popup and focus modes
 package main
 
 import (
@@ -34,20 +34,17 @@ func isEmacsWindowActive() bool {
 		return false
 	}
 
-	// Check if any Emacs window is focused
 	for _, win := range windows.Windows {
 		if (strings.Contains(strings.ToLower(win.Title), "emacs") ||
 			strings.Contains(strings.ToLower(win.AppID), "emacs")) {
-			// In Niri, we'd need to check focus state
-			// For now, assume if Emacs exists, it might be focused
 			return true
 		}
 	}
 	return false
 }
 
-// Get Emacs window ID
-func getEmacsWindowID() (int, bool) {
+// Get main Emacs window ID (not popup windows)
+func getMainEmacsWindowID() (int, bool) {
 	cmd := exec.Command("niri", "msg", "-j", "windows")
 	output, err := cmd.Output()
 	if err != nil {
@@ -60,28 +57,30 @@ func getEmacsWindowID() (int, bool) {
 	}
 
 	for _, win := range windows.Windows {
-		if strings.Contains(strings.ToLower(win.Title), "emacs") ||
-			strings.Contains(strings.ToLower(win.AppID), "emacs") {
+		// Skip popup/float windows, look for main Emacs instance
+		if (strings.Contains(strings.ToLower(win.Title), "emacs") ||
+			strings.Contains(strings.ToLower(win.AppID), "emacs")) &&
+			!strings.Contains(strings.ToLower(win.Title), "popup") &&
+			!strings.Contains(strings.ToLower(win.Title), "float") {
 			return win.ID, true
 		}
 	}
 	return 0, false
 }
 
-// Focus Emacs window and wait for focus to complete using intelligent polling
-func focusEmacsWindow() error {
-	windowID, found := getEmacsWindowID()
+// Focus main Emacs window using intelligent polling
+func focusMainEmacsWindow() error {
+	windowID, found := getMainEmacsWindowID()
 	if !found {
-		return fmt.Errorf("no Emacs window found")
+		return fmt.Errorf("no main Emacs window found")
 	}
 
-	// Activate the window using niri msg
 	cmd := exec.Command("niri", "msg", "action", "focus-window", "--id", fmt.Sprintf("%d", windowID))
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("failed to activate window: %v", err)
 	}
 
-	// Intelligent polling to wait for window activation
+	// Intelligent polling
 	maxWait := 500 * time.Millisecond
 	pollInterval := 2 * time.Millisecond
 	deadline := time.Now().Add(maxWait)
@@ -96,7 +95,6 @@ func focusEmacsWindow() error {
 			pollInterval = 10 * time.Millisecond
 		}
 	}
-
 	return nil
 }
 
@@ -116,12 +114,20 @@ func isEmacsServerRunning() bool {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "Usage: emacs-launcher <elisp-command>")
-		fmt.Fprintln(os.Stderr, "Example: emacs-launcher '(my/focus-and-open-dirvish)'")
+		fmt.Fprintln(os.Stderr, "Usage: emacs-launcher [--focus] <elisp-command>")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(os.Stderr, "Options:")
+		fmt.Fprintln(os.Stderr, "  --focus    Focus main Emacs window before executing command")
+		fmt.Fprintln(os.Stderr, "             (use for capture, omit for popup windows)")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(os.Stderr, "Examples:")
+		fmt.Fprintln(os.Stderr, "  # Popup window (dirvish, notes):")
+		fmt.Fprintln(os.Stderr, "  emacs-launcher '(my/dirvish-popup)'")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(os.Stderr, "  # Focus main window (capture):")
+		fmt.Fprintln(os.Stderr, "  emacs-launcher --focus '(my/focus-and-capture)'")
 		os.Exit(1)
 	}
-
-	emacsCommand := strings.Join(os.Args[1:], " ")
 
 	if !isEmacsServerRunning() {
 		fmt.Fprintln(os.Stderr, "Error: Emacs server is not running")
@@ -129,15 +135,28 @@ func main() {
 		os.Exit(1)
 	}
 
-	// If Emacs is already active, execute immediately
-	if isEmacsWindowActive() {
-		executeEmacsCommand(emacsCommand)
-		return
+	// Parse arguments
+	shouldFocus := false
+	commandStart := 1
+
+	if os.Args[1] == "--focus" {
+		shouldFocus = true
+		commandStart = 2
+		if len(os.Args) < 3 {
+			fmt.Fprintln(os.Stderr, "Error: No command provided after --focus")
+			os.Exit(1)
+		}
 	}
 
-	// Focus Emacs window and wait for it to become active
-	if err := focusEmacsWindow(); err != nil {
-		fmt.Fprintf(os.Stderr, "Warning: %v\n", err)
+	emacsCommand := strings.Join(os.Args[commandStart:], " ")
+
+	// If focus flag is set, focus main Emacs window first
+	if shouldFocus {
+		if err := focusMainEmacsWindow(); err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: %v\n", err)
+		}
+		// Small delay to ensure focus is complete
+		time.Sleep(50 * time.Millisecond)
 	}
 
 	// Execute the Emacs command
