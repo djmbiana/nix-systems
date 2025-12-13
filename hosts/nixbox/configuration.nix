@@ -120,10 +120,11 @@ fonts = {
   wget
   niri
   xwayland-satellite
+  fuzzel
+  swaybg
   tealdeer
   curl
   vlc
-  xclip
   wtype
   wl-clipboard
   dotool
