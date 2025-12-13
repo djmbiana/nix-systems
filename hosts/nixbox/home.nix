@@ -51,6 +51,7 @@ in
    fd
    lsd
    fastfetch
+   posy-cursors
    ungoogled-chromium
  ];
 
