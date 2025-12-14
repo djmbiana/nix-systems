@@ -121,6 +121,7 @@ fonts = {
   vim
   wget
   niri
+  wlogout
   ffmpeg
   xfce.thunar
   waybar
