@@ -296,6 +296,8 @@ binds {
     Alt+F hotkey-overlay-title="Run Emacs: emacs" { spawn "emacs"; }
     Mod+Alt+F hotkey-overlay-title="Run thunar: thunar" { spawn "thunar"; }
 
+    Mod+Ctrl+Escape { spawn "wlogout" "--buttons-per-row" "4"; }
+
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     Mod+Shift+S { spawn "sh" "-c" "PATH=/run/current-system/sw/bin:$PATH /home/marie/nix-systems/config/scripts/snip.sh"; }
 
