@@ -43,7 +43,8 @@ in
    unzip
    stylua
    ripgrep
-   ffmpeg
+   mpv
+   yt-dlp
    ffmpegthumbnailer
    pwvucontrol
    nil
