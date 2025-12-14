@@ -52,7 +52,6 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
-(package! everforest
-  :recipe (:repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
-
-(package! imenu-list)
+(package! tldr)
+(package! dirvish)
+(package! solaire-mode :disable t)
