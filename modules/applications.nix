@@ -6,6 +6,7 @@
     kdePackages.kdenlive
     cider-2
     libreoffice-qt
+    zoom-us
     obs-studio
   ];
 }
