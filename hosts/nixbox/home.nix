@@ -63,6 +63,7 @@ in
    fd
    lsd
    fastfetch
+   bibata-cursors
    posy-cursors
    ungoogled-chromium
  ];
