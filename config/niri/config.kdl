@@ -137,7 +137,7 @@ layout {
     focus-ring {
         // How many logical pixels the ring extends out from the windows.
         width 1.5
-        active-color "#d65d0e"
+        active-color "#d8a657"
         inactive-color "#505050"
     }
 
@@ -148,7 +148,7 @@ layout {
         off
 
         width 1.5
-        active-color "#d65d0e"
+        active-color "#d8a657"
         inactive-color "#505050"
 
         // Color of the border around windows that request your attention.
@@ -181,7 +181,7 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-sh-at-startup "swaybg -i ~/Pictures/wallpaper/mate-3.jpg"
+spawn-sh-at-startup "swaybg -i ~/Pictures/wallpaper/gray_trees.jpg"
 spawn-at-startup "waybar"
 spawn-at-startup "emacs"
 
