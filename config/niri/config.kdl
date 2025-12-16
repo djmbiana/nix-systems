@@ -181,7 +181,7 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-sh-at-startup "swaybg -i ~/Pictures/wallpaper/pa3vjqz602q51.jpg"
+spawn-sh-at-startup "swaybg -i ~/Pictures/wallpaper/mate-3.jpg"
 spawn-at-startup "waybar"
 spawn-at-startup "emacs"
 
@@ -195,13 +195,13 @@ hotkey-overlay {
 
 //this sets the cursor
 cursor {
-    xcursor-theme "Posy_Cursor_Black"
-    xcursor-size 20
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 24
 }
 
 environment {
-    XCURSOR_THEME "Posy_Cursor_Black"
-    XCURSOR_SIZE "20"
+    XCURSOR_THEME "Bibata-Modern-Ice"
+    XCURSOR_SIZE "24"
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
