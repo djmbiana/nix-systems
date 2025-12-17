@@ -113,6 +113,7 @@
       nerd-fonts.iosevka
       nerd-fonts.ubuntu
       nerd-fonts.ubuntu-mono
+      nerd-fonts.zed-mono
     ];
   };
 
