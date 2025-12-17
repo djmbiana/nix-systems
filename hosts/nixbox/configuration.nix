@@ -141,7 +141,7 @@
   vlc
   wtype
   wl-clipboard
-  dotool
+  wlogout
   bat
   alacritty
   ];
