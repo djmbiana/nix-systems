@@ -124,7 +124,7 @@ fonts = {
   vim
   wget
   ffmpeg
-  pcmanfm-qt
+  xfce.thunar
   waybar
   grim
   slurp
@@ -142,6 +142,7 @@ fonts = {
 
   # List services that you want to enable:
   services.flatpak.enable = true;
+  services.tumbler.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
