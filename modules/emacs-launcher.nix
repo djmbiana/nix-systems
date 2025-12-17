@@ -8,7 +8,7 @@
       (pkgs.buildGoModule {
         pname = "emacs-launcher";
         version = "1.0.0";
-        src = /home/marie/nix-systems/config/scripts;
+        src = ../config/scripts/emacs-launcher.go;
         vendorHash = null;
         subPackages = [ "." ];
       })
