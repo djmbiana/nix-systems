@@ -147,6 +147,7 @@ fonts = {
   dotool
   bat
   alacritty
+  kitty
   ];
 
   # List services that you want to enable:
