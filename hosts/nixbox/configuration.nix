@@ -41,6 +41,14 @@
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
+  # Enables hyprland
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  }
+
+  
+
   # Enables Niri
   programs.niri.enable = true;
 
@@ -128,6 +136,7 @@ fonts = {
   grim
   slurp
   foot
+  hyprpaper
   xwayland-satellite
   swaybg
   tealdeer
