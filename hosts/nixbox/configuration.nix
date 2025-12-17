@@ -47,11 +47,6 @@
     xwayland.enable = true;
   };
 
-  
-
-  # Enables Niri
-  programs.niri.enable = true;
-
   # Enable XFCE
   # services.xserver.desktopManager.xfce.enable = true;
 
@@ -128,8 +123,6 @@ fonts = {
   git
   vim
   wget
-  niri
-  wlogout
   ffmpeg
   xfce.thunar
   waybar
@@ -137,8 +130,6 @@ fonts = {
   slurp
   foot
   hyprpaper
-  xwayland-satellite
-  swaybg
   tealdeer
   curl
   vlc
@@ -147,7 +138,6 @@ fonts = {
   dotool
   bat
   alacritty
-  kitty
   ];
 
   # List services that you want to enable:

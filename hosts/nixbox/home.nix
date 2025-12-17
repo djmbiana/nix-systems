@@ -22,11 +22,6 @@ in
     gtk.enable = true;
     x11.enable = true;
   };
-  
-  xdg.configFile."niri" = {
-    source = create_symlink "${dotfiles}/niri/";
-    recursive = true;
-  };
 
   xdg.configFile."alacritty" = {
     source = create_symlink "${dotfiles}/alacritty/";
@@ -46,7 +41,6 @@ in
 
  home.packages = with pkgs; [
    neovim
-   wlr-randr
    emacs
    unzip
    stylua
@@ -65,7 +59,6 @@ in
    libtool
    libvterm
    vips
-   fuzzel
    rofi
    gnumake
    nodejs
