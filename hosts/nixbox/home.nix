@@ -78,6 +78,7 @@ in
    mpv
    yt-dlp
    cmatrix
+   pipes
    btop
    xfce.thunar-volman
    xfce.thunar-archive-plugin
