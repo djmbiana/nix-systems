@@ -124,7 +124,7 @@ fonts = {
   vim
   wget
   ffmpeg
-  xfce.thunar
+  pcmanfm-qt
   waybar
   grim
   slurp
