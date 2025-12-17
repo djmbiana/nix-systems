@@ -16,6 +16,14 @@ in
   programs.git.enable = true;
   home.stateVersion = "25.11";
 
+  home.pointerCursor = {
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";  # Change to Bibata-Modern-Ice for white cursor
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+  
   xdg.configFile."niri" = {
     source = create_symlink "${dotfiles}/niri/";
     recursive = true;
@@ -58,6 +66,8 @@ in
    libtool
    libvterm
    vips
+   fuzzel
+   rofi
    gnumake
    nodejs
    gcc

@@ -129,7 +129,6 @@ fonts = {
   slurp
   foot
   xwayland-satellite
-  fuzzel
   swaybg
   tealdeer
   curl
