@@ -6,17 +6,23 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mangowc = {
-      url = "github:DreamMaoMao/mangowc";
+    mango = {
+      url = "github:DreamMaoMao/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, mangowc, ... }: {
+  outputs = { self, nixpkgs, home-manager, mango, ... }: {
     nixosConfigurations.nixbox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hosts/nixbox/configuration.nix
-        mangowc.nixosModules.default
+        
+        # Add mango nixos module
+        mango.nixosModules.mango
+        {
+          programs.mango.enable = true;
+        }
+        
         home-manager.nixosModules.home-manager
         {
           home-manager = {
