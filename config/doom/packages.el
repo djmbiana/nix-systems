@@ -54,4 +54,7 @@
 ;; (unpin! t)
 (package! tldr)
 (package! dirvish)
+(package! elfeed-goodies)
+(package! elfeed-tube)
+(package! elfeed-tube-mpv)
 (package! solaire-mode :disable t)

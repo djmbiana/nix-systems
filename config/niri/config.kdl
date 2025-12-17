@@ -181,7 +181,7 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-sh-at-startup "swaybg -i ~/Pictures/wallpaper/gray_trees.jpg"
+spawn-sh-at-startup "swaybg -i ~/Pictures/wallpaper/castle.jpg"
 spawn-at-startup "waybar"
 spawn-at-startup "emacs"
 

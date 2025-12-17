@@ -41,7 +41,7 @@
 
 ;; set theme
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes/")
-(load-theme 'gruvchad t)
+(load-theme 'doom-gruvbox t)
 
 ;; remove top frame bar in emacs
 (add-to-list 'default-frame-alist '(undecorated . t))
@@ -175,6 +175,68 @@
 (after! eww
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 
+(require 'elfeed)
+(require 'elfeed-goodies)
+(require 'elfeed-tube)
+(require 'elfeed-tube-mpv)
+
+(elfeed-goodies/setup)
+(setq elfeed-goodies/entry-pane-size 0.5)
+
+(elfeed-tube-setup)
+
+(setq elfeed-feeds
+      (quote
+        (;; News
+        ("https://www.rappler.com/feed/" news philippines)
+        ("https://www.philstar.com/rss/headlines" news philippines)
+        ("https://www.inquirer.net/fullfeed" news philippines)
+        ("https://www.theguardian.com/international/rss" news international)
+        ("https://www.bbc.com/news/rss.xml" news international)
+
+        ;; Music
+        ("https://www.kerrang.com/feed/" music)
+        ("https://thequietus.com/feed" music)
+        ("https://daily.bandcamp.com/feed/" music)
+        ("https://www.hearingthings.co/feed/" music)
+        ("https://theneedledrop.com/feed/" music reviews)
+        ("https://pitchfork.com/rss/reviews/albums/" music reviews)
+
+        ;; Tech
+        ("https://itsfoss.com/feed/" tech linux)
+        ("https://www.linuxuprising.com/feeds/posts/default" tech linux)
+        ("https://www.phoronix.com/rss.php" tech linux)
+        ("https://www.wsj.com/xml/rss/3_7455.xml" tech business)
+        ("https://www.wired.com/feed/rss" tech)
+        ("https://www.pcworld.com/feed" tech)
+        ("https://news.ycombinator.com/rss" tech hn)
+
+        ;; Reddit
+        ("https://www.reddit.com/r/Philippines/.rss" reddit philippines)
+        ("https://www.reddit.com/r/Buddhism/.rss" reddit buddhism)
+
+        ;; YouTube Channels
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxQKHvKbmSzGMvUrVtJYnUA" jvscholz)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_O4q0rsz5wKYBm3eKOjG0w" reysu)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" distrotube)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w" louis_rossmann)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2wKfjlioOCLP4xQMOWNcgg" mental_outlaw)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCBZxfcALb7lqNR_bW2OVouw" breadonpenguins)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqrKe-6YBshFzejCo3aySSQ" joshua_blais)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCXQmdfCcGHWdkKYG4b0cw8w" sylvan_franklin))))
+
+;; Set browser to eww
+(setq browse-url-browser-function 'eww-browse-url)
+
+;; Keybindings - set after elfeed loads
+(evil-define-key 'normal elfeed-show-mode-map
+                  (kbd "J") 'elfeed-goodies/split-show-next
+                  (kbd "K") 'elfeed-goodies/split-show-prev
+                  (kbd "V") 'elfeed-tube-mpv)
+(evil-define-key 'normal elfeed-search-mode-map
+                  (kbd "J") 'elfeed-goodies/split-show-next
+                  (kbd "K") 'elfeed-goodies/split-show-prev)
+
 (defun thanos/wtype-text (text)
   "Process TEXT for wtype, handling newlines properly."
   (let* ((has-final-newline (string-match-p "\n$" text))
@@ -231,6 +293,11 @@
       (set-window-dedicated-p (selected-window) t))))
 
 (setq vterm-shell "/etc/profiles/per-user/marie/bin/zsh")
+(setq vterm-environment '("TERM=xterm-256color"))
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+(custom-set-faces!
+  '(vterm :family "UbuntuMono Nerd Font"))
 
 (defun my/create-popup-frame (buffer-or-name &optional width height)
   "Create a popup frame for BUFFER-OR-NAME with optional WIDTH and HEIGHT."
@@ -244,7 +311,7 @@
     (set-frame-parameter frame 'delete-before-kill-buffer t)
     frame))
 
-(setq confirm-kill-emacs nil)
+(setq confirm-kill-processes nil)
 
 ;; Configure pyright
 (after! lsp-pyright
