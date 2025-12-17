@@ -16,6 +16,26 @@ in
   programs.git.enable = true;
   home.stateVersion = "25.11";
 
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Arc-Dark";
+      package = pkgs.arc-theme;
+    };
+    iconTheme = {
+      name = "Tela-dark";  # You already have tela-icon-theme
+      package = pkgs.tela-icon-theme;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Ice";  # Change to Bibata-Modern-Ice for white cursor
@@ -51,10 +71,17 @@ in
    emacs
    zip 
    unzip
+   p7zip
+   file-roller
    stylua
    ripgrep
    mpv
    yt-dlp
+   xfce.thunar-volman
+   xfce.thunar-archive-plugin
+   xfce.thunar-media-tags-plugin
+   arc-theme
+   tela-icon-theme
    ffmpegthumbnailer
    pwvucontrol
    nil
