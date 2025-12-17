@@ -106,9 +106,9 @@
   nixpkgs.config.allowUnfree = true;
 
 # Fonts
-fonts = {
-  fontDir.enable = true;
-  packages = with pkgs; [
+  fonts = {
+    fontDir.enable = true;
+    packages = with pkgs; [
       nerd-fonts.hack
       nerd-fonts.iosevka
       nerd-fonts.ubuntu
@@ -116,6 +116,11 @@ fonts = {
     ];
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    config.common.default = "*";
+  };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
