@@ -42,6 +42,7 @@ in
  home.packages = with pkgs; [
    neovim
    emacs
+   zip 
    unzip
    stylua
    ripgrep
