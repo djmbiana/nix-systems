@@ -39,6 +39,7 @@ in
 
  home.packages = with pkgs; [
    neovim
+   wlr-randr
    emacs
    unzip
    stylua
