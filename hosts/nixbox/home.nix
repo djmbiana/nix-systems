@@ -27,7 +27,8 @@ in
   xdg.configFile."hypr" = {
     source = create_symlink "${dotfiles}/hypr/";
     recursive = true;
-  }
+  };
+
   xdg.configFile."alacritty" = {
     source = create_symlink "${dotfiles}/alacritty/";
     recursive = true;
