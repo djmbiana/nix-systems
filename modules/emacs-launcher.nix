@@ -4,7 +4,7 @@
   options = {};
   
   config = {
-    environment.systemPackages = [
+    home.packages = [
       (pkgs.buildGoModule {
         pname = "emacs-launcher";
         version = "1.0.0";
