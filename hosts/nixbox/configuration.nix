@@ -162,14 +162,6 @@
   wtype           # typing automation
   wl-clipboard    # clipboard management
   wlogout         # logout menu
-  
-  # --- X11 (XMonad) utilities ---
-  picom           # compositor
-  xmobar          # status bar
-  maim            # screenshots
-  xwallpaper      # wallpaper
-  xclip           # clipboard management
-  
   ];
 
   # List services that you want to enable:
