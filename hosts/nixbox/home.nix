@@ -108,7 +108,6 @@ in
    bibata-cursors
    posy-cursors
    ungoogled-chromium
-   snapshot
  ];
 
  programs = {
