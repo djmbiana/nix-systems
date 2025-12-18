@@ -136,6 +136,7 @@ in
           vim = "nvim";
           ns1 = "cd ~/nix-systems/hosts/nixbox/";
           nsc = "cd ~/nix-systems/config/";
+          ff = "fastfetch";
         };
         sessionVariables = {
           MANPAGER = "nvim +Man!";
