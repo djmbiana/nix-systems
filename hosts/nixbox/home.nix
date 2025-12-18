@@ -85,6 +85,7 @@ in
    xfce.thunar-media-tags-plugin
    arc-theme
    tela-icon-theme
+   jq
    ffmpegthumbnailer
    pwvucontrol
    nil
@@ -107,6 +108,7 @@ in
    bibata-cursors
    posy-cursors
    ungoogled-chromium
+   snapshot
  ];
 
  programs = {
