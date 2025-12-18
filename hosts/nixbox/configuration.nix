@@ -47,12 +47,16 @@
     xwayland.enable = true;
   };
 
+  # Enable xmonad
+  services.xserver.windowManager.xmonad.enable = true;
+  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+
   # Enable XFCE
   # services.xserver.desktopManager.xfce.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.ly.enable = true;
-  # services.desktopManager.plasma6.enable = true;
+  services.picom.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -143,6 +147,9 @@
   wl-clipboard
   wlogout
   bat
+  picom
+  xmobar
+  haskell-language-server
   alacritty
   ];
 
