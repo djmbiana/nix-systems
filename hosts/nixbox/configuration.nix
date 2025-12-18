@@ -47,22 +47,6 @@
     enable = true;
     autoRepeatDelay = 200;
     autoRepeatInterval = 35;
-    
-    # Window Manager - XMonad
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      extraPackages = hpkgs: [
-        hpkgs.xmonad
-        hpkgs.xmonad-extras
-        hpkgs.xmonad-contrib
-      ];
-    };
-    
-    # Wallpaper on session start
-    displayManager.sessionCommands = ''
-      xwallpaper --zoom ~/Pictures/wallpaper/castle.jpg
-    '';
   };
   
   # Display Manager
