@@ -145,6 +145,7 @@
   vlc
   wtype
   wl-clipboard
+  xclip
   wlogout
   bat
   picom
