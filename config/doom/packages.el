@@ -54,6 +54,7 @@
 ;; (unpin! t)
 (package! tldr)
 (package! dirvish)
+(package! multiple-cursors)
 (package! elfeed-goodies)
 (package! elfeed-tube)
 (package! elfeed-tube-mpv)

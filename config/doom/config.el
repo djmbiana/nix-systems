@@ -1,4 +1,3 @@
-(setq doom-font (font-spec :family "Ubuntu Mono Nerd Font" :size 16))
 (setq display-line-numbers-type 'relative)
 
 ;;dashboard settings
@@ -36,12 +35,12 @@
 
 ;; font settings
 (setq doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)
-      doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 18)
-      doom-big-font (font-spec :family "UbuntutMono Nerd Font" :size 22))
+      doom-variable-pitch-font (font-spec :family "UbuntuMono Nerd Font" :size 18)
+      doom-big-font (font-spec :family "UbuntuMono Nerd Font" :size 22))
 
 ;; set theme
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes/")
-(load-theme 'doom-gruvbox t)
+(load-theme 'doom-tomorrow-night t)
 
 ;; remove top frame bar in emacs
 (add-to-list 'default-frame-alist '(undecorated . t))
@@ -54,12 +53,374 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/org/")
-(setq org-roam-directory "~/Documents/org/roam")
-(setq org-modern-table-vertical 1)
-(setq org-modern-table t)
-(add-hook 'org-mode-hook #'hl-todo-mode)
+;;; ============================================================================
+;;; org directory & files
+;;; ============================================================================
 
+(after! org
+  ;; Set up org directory
+  (setq org-directory "~/Documents/org")
+
+  ;; Define your main org files for agenda
+  (setq org-agenda-files '("~/Documents/org/inbox.org"
+                           "~/Documents/org/calendar.org"
+                           "~/Documents/org/projects.org"))
+
+  ;; Archive location - completed tasks go to done.org
+  (setq org-archive-location "~/Documents/org/done.org::* Archived Tasks")
+
+  ;;; ============================================================================
+  ;;; ORG BEHAVIOR & DEFAULTS
+  ;;; ============================================================================
+
+  ;; Add timestamp when task is marked DONE
+  (setq org-log-done 'time)
+
+  ;; Keep logs in a drawer to reduce clutter
+  (setq org-log-into-drawer t)
+
+  ;; Refile targets (for moving tasks between files)
+  (setq org-refile-targets
+        '((org-agenda-files :maxlevel . 3)
+          (nil :maxlevel . 3)))
+
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+
+  ;;; ============================================================================
+  ;;; ORG CAPTURE TEMPLATES
+  ;;; ============================================================================
+
+  (setq org-capture-templates
+        '(("i" "Inbox" entry
+           (file "~/Documents/org/inbox.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
+           :empty-lines 1)
+
+          ("n" "Note" entry
+           (file "~/Documents/org/notes.org")
+           "* %? :note:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a"
+           :empty-lines 1)
+
+          ("c" "Calendar Event" entry
+           (file "~/Documents/org/calendar.org")
+           "* %?\nSCHEDULED: %^T\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
+           :empty-lines 1)
+
+          ("d" "Deadline" entry
+           (file "~/Documents/org/calendar.org")
+           "* TODO %?\nDEADLINE: %^T\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
+           :empty-lines 1)
+
+          ("p" "Project Note" entry
+           (file "~/Documents/org/projects.org")
+           "* %? :project:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a"
+           :empty-lines 1)
+
+          ("l" "Link/Website" entry
+           (file "~/Documents/org/notes.org")
+           "* %? :link:\n:PROPERTIES:\n:CREATED: %U\n:URL: %^{URL}\n:END:\n%i"
+           :empty-lines 1)
+
+          ("v" "Video" entry
+           (file "~/Documents/org/notes.org")
+           "* %? :video:\n:PROPERTIES:\n:CREATED: %U\n:URL: %^{Video URL}\n:END:\n%i"
+           :empty-lines 1)))
+
+  ;;; ============================================================================
+  ;;; ORG AGENDA CUSTOM VIEWS
+  ;;; ============================================================================
+
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-deadline-warning-days 7)))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Inbox Tasks")
+                   (org-agenda-files '("~/Documents/org/inbox.org"))))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Projects")
+                   (org-agenda-files '("~/Documents/org/projects.org"))))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Calendar & Deadlines")
+                   (org-agenda-files '("~/Documents/org/calendar.org"))))))
+
+          ("w" "Weekly Review"
+           ((agenda "" ((org-agenda-span 'week)))
+            (todo "TODO")
+            (todo "WAITING")
+            (todo "SOMEDAY")))
+
+          ("i" "Inbox Review"
+           ((todo "TODO"
+                  ((org-agenda-files '("~/Documents/org/inbox.org"))
+                   (org-agenda-overriding-header "Process Inbox")))))))
+
+  ;;; ============================================================================
+  ;;; CUSTOM FUNCTIONS
+  ;;; ============================================================================
+
+  ;; Function to archive all DONE tasks to done.org
+  (defun my/archive-done-tasks ()
+    "Archive all DONE tasks in current buffer to done.org"
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree)
+       (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+     "/DONE" 'file))
+
+  ;; Optional: Auto-archive when marking task DONE (commented out by default)
+  ;; Uncomment if you want automatic archiving
+  ;; (defun my/auto-archive-done-task ()
+  ;;   "Automatically archive task when marked DONE"
+  ;;   (when (org-entry-is-done-p)
+  ;;     (org-archive-subtree)))
+  ;; (add-hook 'org-after-todo-state-change-hook 'my/auto-archive-done-task)
+
+  ;;; ============================================================================
+  ;;; KEYBINDINGS
+  ;;; ============================================================================
+
+  ;; Archive done tasks
+  (map! :map org-mode-map
+        :localleader
+        :desc "Archive done tasks" "x d" #'my/archive-done-tasks)
+
+  ;; Quick file access (using Doom's SPC o prefix for "open")
+  (map! :leader
+        :desc "Open inbox" "o i" (lambda () (interactive) (find-file "~/Documents/org/inbox.org"))
+        :desc "Open calendar" "o c" (lambda () (interactive) (find-file "~/Documents/org/calendar.org"))
+        :desc "Open notes" "o n" (lambda () (interactive) (find-file "~/Documents/org/notes.org"))
+        :desc "Open projects" "o p" (lambda () (interactive) (find-file "~/Documents/org/projects.org"))
+        :desc "Open done/archive" "o d" (lambda () (interactive) (find-file "~/Documents/org/done.org"))))
+
+;;; ============================================================================
+;;; ORG-ROAM CONFIGURATION
+;;; ============================================================================
+
+(after! org-roam
+  ;; Set org-roam directory
+  (setq org-roam-directory "~/Documents/org/roam")
+
+  ;; Add org-roam to refile targets
+  (setq org-refile-targets
+        (append org-refile-targets
+                '((org-roam-directory :maxlevel . 2))))
+
+  ;; Function to convert a note from notes.org to org-roam
+  (defun my/note-to-roam ()
+    "Convert current org heading to an org-roam note"
+    (interactive)
+    (let* ((title (org-get-heading t t t t))
+           (content (save-excursion
+                      (org-end-of-meta-data t)
+                      (buffer-substring-no-properties
+                       (point)
+                       (save-excursion
+                         (org-end-of-subtree t)
+                         (point))))))
+      ;; Cut the current subtree
+      (org-cut-subtree)
+      ;; Create new roam note
+      (org-roam-node-find nil title)
+      ;; Insert the content
+      (goto-char (point-max))
+      (insert "\n" content)
+      (save-buffer)
+      (message "Converted '%s' to org-roam note" title)))
+
+  ;; Keybinding for converting note to roam
+  (map! :map org-mode-map
+        :localleader
+        :desc "Convert to org-roam note" "n r" #'my/note-to-roam))
+
+
+;;; ============================================================================
+;;; ORG DIRECTORY & FILES
+;;; ============================================================================
+
+(after! org
+  ;; Set up org directory
+  (setq org-directory "~/Documents/org")
+
+  ;; Define your main org files for agenda
+  (setq org-agenda-files '("~/Documents/org/inbox.org"
+                           "~/Documents/org/calendar.org"
+                           "~/Documents/org/projects.org"))
+
+  ;; Archive location - completed tasks go to done.org
+  (setq org-archive-location "~/Documents/org/done.org::* Archived Tasks")
+
+  ;;; ============================================================================
+  ;;; ORG BEHAVIOR & DEFAULTS
+  ;;; ============================================================================
+
+  ;; Add timestamp when task is marked DONE
+  (setq org-log-done 'time)
+
+  ;; Keep logs in a drawer to reduce clutter
+  (setq org-log-into-drawer t)
+
+  ;; Refile targets (for moving tasks between files)
+  (setq org-refile-targets
+        '((org-agenda-files :maxlevel . 3)
+          (nil :maxlevel . 3)))
+
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+
+  ;;; ============================================================================
+  ;;; ORG CAPTURE TEMPLATES
+  ;;; ============================================================================
+
+  (setq org-capture-templates
+        '(("i" "Inbox" entry
+           (file "~/Documents/org/inbox.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
+           :empty-lines 1)
+
+          ("n" "Note" entry
+           (file "~/Documents/org/notes.org")
+           "* %? :note:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a"
+           :empty-lines 1)
+
+          ("c" "Calendar Event" entry
+           (file "~/Documents/org/calendar.org")
+           "* %?\nSCHEDULED: %^T\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
+           :empty-lines 1)
+
+          ("d" "Deadline" entry
+           (file "~/Documents/org/calendar.org")
+           "* TODO %?\nDEADLINE: %^T\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
+           :empty-lines 1)
+
+          ("p" "Project Note" entry
+           (file "~/Documents/org/projects.org")
+           "* %? :project:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i\n%a"
+           :empty-lines 1)
+
+          ("l" "Link/Website" entry
+           (file "~/Documents/org/notes.org")
+           "* %? :link:\n:PROPERTIES:\n:CREATED: %U\n:URL: %^{URL}\n:END:\n%i"
+           :empty-lines 1)
+
+          ("v" "Video" entry
+           (file "~/Documents/org/notes.org")
+           "* %? :video:\n:PROPERTIES:\n:CREATED: %U\n:URL: %^{Video URL}\n:END:\n%i"
+           :empty-lines 1)))
+
+  ;;; ============================================================================
+  ;;; ORG AGENDA CUSTOM VIEWS
+  ;;; ============================================================================
+
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-deadline-warning-days 7)))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Inbox Tasks")
+                   (org-agenda-files '("~/Documents/org/inbox.org"))))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Projects")
+                   (org-agenda-files '("~/Documents/org/projects.org"))))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Calendar & Deadlines")
+                   (org-agenda-files '("~/Documents/org/calendar.org"))))))
+
+          ("w" "Weekly Review"
+           ((agenda "" ((org-agenda-span 'week)))
+            (todo "TODO")
+            (todo "WAITING")
+            (todo "SOMEDAY")))
+
+          ("i" "Inbox Review"
+           ((todo "TODO"
+                  ((org-agenda-files '("~/Documents/org/inbox.org"))
+                   (org-agenda-overriding-header "Process Inbox")))))))
+
+  ;;; ============================================================================
+  ;;; CUSTOM FUNCTIONS
+  ;;; ============================================================================
+
+  ;; Function to archive all DONE tasks to done.org
+  (defun my/archive-done-tasks ()
+    "Archive all DONE tasks in current buffer to done.org"
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree)
+       (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+     "/DONE" 'file))
+
+  ;; Optional: Auto-archive when marking task DONE (commented out by default)
+  ;; Uncomment if you want automatic archiving
+  ;; (defun my/auto-archive-done-task ()
+  ;;   "Automatically archive task when marked DONE"
+  ;;   (when (org-entry-is-done-p)
+  ;;     (org-archive-subtree)))
+  ;; (add-hook 'org-after-todo-state-change-hook 'my/auto-archive-done-task)
+
+  ;;; ============================================================================
+  ;;; KEYBINDINGS
+  ;;; ============================================================================
+
+  ;; Archive done tasks
+  (map! :map org-mode-map
+        :localleader
+        :desc "Archive done tasks" "x d" #'my/archive-done-tasks)
+
+  ;; Quick file access (using Doom's SPC o prefix for "open")
+  (map! :leader
+        :desc "Open inbox" "o i" (lambda () (interactive) (find-file "~/Documents/org/inbox.org"))
+        :desc "Open calendar" "o c" (lambda () (interactive) (find-file "~/Documents/org/calendar.org"))
+        :desc "Open notes" "o n" (lambda () (interactive) (find-file "~/Documents/org/notes.org"))
+        :desc "Open projects" "o p" (lambda () (interactive) (find-file "~/Documents/org/projects.org"))
+        :desc "Open done/archive" "o d" (lambda () (interactive) (find-file "~/Documents/org/done.org"))))
+
+;;; ============================================================================
+;;; ORG-ROAM CONFIGURATION
+;;; ============================================================================
+
+(after! org-roam
+  ;; Set org-roam directory
+  (setq org-roam-directory "~/Documents/org/roam")
+
+  ;; Add org-roam to refile targets
+  (setq org-refile-targets
+        (append org-refile-targets
+                '((org-roam-directory :maxlevel . 2))))
+
+  ;; Function to convert a note from notes.org to org-roam
+  (defun my/note-to-roam ()
+    "Convert current org heading to an org-roam note"
+    (interactive)
+    (let* ((title (org-get-heading t t t t))
+           (content (save-excursion
+                      (org-end-of-meta-data t)
+                      (buffer-substring-no-properties
+                       (point)
+                       (save-excursion
+                         (org-end-of-subtree t)
+                         (point))))))
+      ;; Cut the current subtree
+      (org-cut-subtree)
+      ;; Create new roam note
+      (org-roam-node-find nil title)
+      ;; Insert the content
+      (goto-char (point-max))
+      (insert "\n" content)
+      (save-buffer)
+      (message "Converted '%s' to org-roam note" title)))
+
+  ;; Keybinding for converting note to roam
+  (map! :map org-mode-map
+        :localleader
+        :desc "Convert to org-roam note" "n r" #'my/note-to-roam))
+
+;;; ============================================================================
+;;; STYLE SETTINGS
+;;; ============================================================================
 ;; sets the different headers in org mode
 (custom-set-faces!
   '(org-level-8 :inherit outline-3 :height 1.0)
@@ -72,25 +433,27 @@
   '(org-level-1 :inherit outline-1 :height 1.6)
   '(org-document-title :height 1.8 :bold t :underline nil))
 
-;; focus function for capture
-(defun my/focus-and-capture ()
-  "Focus main Emacs frame and open org-capture."
-  (interactive)
-  ;; Try to find the main emacs frame (not popup)
-  (let ((main-frame (seq-find
-                     (lambda (f)
-                       (not (string= (frame-parameter f 'name) "emacs-popup")))
-                     (frame-list))))
-    (when main-frame
-      (select-frame-set-input-focus main-frame))
-    (org-capture)))
+;;; ============================================================================
+;;; KEYBINDING REFERENCE
+;;; ============================================================================
 
-;; Notes popup function
-(defun my/notes-popup ()
-  "Open notes.org in a new popup frame."
-  (interactive)
-  (my/create-popup-frame (find-file-noselect "~/Documents/org/notes.org") 100 40)
-  (org-mode))
+;; Doom Emacs already provides these by default:
+;; SPC o a     - Open org-agenda
+;; SPC o A     - Open org-agenda in other window
+;; SPC X       - org-capture (or SPC n c in some Doom versions)
+;; SPC m l l   - org-insert-link (in org-mode)
+;; SPC m t     - org-todo (cycle TODO states)
+;; SPC m s     - org-schedule
+;; SPC m d     - org-deadline
+
+;; Custom keybindings added above:
+;; SPC o i     - Open inbox.org
+;; SPC o c     - Open calendar.org
+;; SPC o n     - Open notes.org
+;; SPC o p     - Open projects.org
+;; SPC o d     - Open done.org (archive)
+;; SPC m x d   - Archive all DONE tasks (in org-mode buffer)
+;; SPC m n r   - Convert current heading to org-roam note
 
 (use-package! dirvish
   :init
@@ -135,34 +498,18 @@
         :n "s" #'dirvish-quicksort
         :n "a" #'dirvish-quick-access))
 
-;; Functions
+;; Simple function that opens dirvish - script handles workspace switching
+(defun my/focus-and-dirvish ()
+  "Open dirvish in current Emacs session."
+  (interactive)
+  (dirvish))
+
 (defun my/dirvish-here ()
   "Open dirvish in the directory of the current buffer."
   (interactive)
   (let ((dir (or (when (buffer-file-name)
                    (file-name-directory (buffer-file-name)))
                  default-directory)))
-    (dirvish dir)))
-
-(defun my/focus-and-open-dirvish ()
-  "Focus Emacs window and open dirvish in home directory."
-  (interactive)
-  (select-frame-set-input-focus (selected-frame))
-  (dirvish "~/"))
-
-;; Leader keybindings
-(map! :leader
-      :desc "Open dirvish here" "o f" #'my/dirvish-here
-      :desc "Open dirvish home" "o F" #'dirvish)
-
-;; Dirvish popup function for Niri
-(defun my/dirvish-popup ()
-  "Open dirvish in a new popup frame."
-  (interactive)
-  (let ((dir (or (when (buffer-file-name)
-                   (file-name-directory (buffer-file-name)))
-                 "~/")))
-    (my/create-popup-frame "*dirvish*" 120 35)
     (dirvish dir)))
 
 ;; Update leader keybindings (replaces existing leader keybindings section)
@@ -237,6 +584,12 @@
                   (kbd "J") 'elfeed-goodies/split-show-next
                   (kbd "K") 'elfeed-goodies/split-show-prev)
 
+;; Simple function that opens elfeed - script handles workspace switching
+(defun my/focus-and-elfeed ()
+  "Open elfeed in current Emacs session."
+  (interactive)
+  (elfeed))
+
 (defun thanos/wtype-text (text)
   "Process TEXT for wtype, handling newlines properly."
   (let* ((has-final-newline (string-match-p "\n$" text))
@@ -248,29 +601,18 @@
               collect (cond
                        ;; Last line without final newline
                        ((and (= i last-idx) (not has-final-newline))
-                        (format "wtype \"%s\""
+                        (format "wtype -s 350 \"%s\""
                                 (replace-regexp-in-string "\"" "\\\\\"" line)))
                        ;; Any other line
                        (t
-                        (format "wtype \"%s\" && wtype -k Return"
+                        (format "wtype -s 350 \"%s\" && wtype -k Return"
                                 (replace-regexp-in-string "\"" "\\\\\"" line)))))
      " && ")))
-
-(define-minor-mode thanos/type-mode
-  "Minor mode for inserting text via wtype."
-  :keymap `((,(kbd "C-c C-c") . ,(lambda () (interactive)
-                                   (call-process-shell-command
-                                    (thanos/wtype-text (buffer-string))
-                                    nil 0)
-                                   (delete-frame)))
-            (,(kbd "C-c C-k") . ,(lambda () (interactive)
-                                   (kill-buffer (current-buffer))))))
 
 (defun thanos/type ()
   "Launch a temporary frame with a clean buffer for typing."
   (interactive)
   (let ((frame (make-frame '((name . "emacs-float")
-                             (title . "emacs-float")  ;; Explicitly set title
                              (fullscreen . 0)
                              (undecorated . t)
                              (width . 70)
@@ -278,19 +620,22 @@
         (buf (get-buffer-create "emacs-float")))
     (select-frame frame)
     (switch-to-buffer buf)
-    (with-current-buffer buf
-      (erase-buffer)
-      (org-mode)
-      (thanos/type-mode)
-      (setq-local header-line-format
-                  (format " %s to insert text or %s to cancel."
-                          (propertize "C-c C-c" 'face 'help-key-binding)
-                          (propertize "C-c C-k" 'face 'help-key-binding)))
-      ;; Make the frame more temporary-like
-      (set-frame-parameter frame 'delete-before-kill-buffer t)
-      ;; Explicitly set title again
-      (set-frame-parameter frame 'title "emacs-float")
-      (set-window-dedicated-p (selected-window) t))))
+    (erase-buffer)
+    (org-mode)
+    (setq-local header-line-format
+                (format " %s to insert text or %s to cancel."
+                        (propertize "C-c C-c" 'face 'help-key-binding)
+			(propertize "C-c C-k" 'face 'help-key-binding)))
+    (local-set-key (kbd "C-c C-k")
+		   (lambda () (interactive)
+		     (kill-new (buffer-string))
+		     (delete-frame)))
+    (local-set-key (kbd "C-c C-c")
+		   (lambda () (interactive)
+		     (start-process-shell-command
+		      "wtype" nil
+		      (thanos/wtype-text (buffer-string)))
+		     (delete-frame)))))
 
 (setq vterm-shell "/etc/profiles/per-user/marie/bin/zsh")
 (setq vterm-environment '("TERM=xterm-256color"))
@@ -299,20 +644,28 @@
 (custom-set-faces!
   '(vterm :family "UbuntuMono Nerd Font"))
 
-(defun my/create-popup-frame (buffer-or-name &optional width height)
-  "Create a popup frame for BUFFER-OR-NAME with optional WIDTH and HEIGHT."
-  (let ((frame (make-frame `((name . "emacs-popup")
-                             (undecorated . t)
-                             (width . ,(or width 100))
-                             (height . ,(or height 30))
-                             (minibuffer . t)))))
-    (select-frame frame)
-    (switch-to-buffer buffer-or-name)
-    (set-frame-parameter frame 'delete-before-kill-buffer t)
-    frame))
-
-(setq confirm-kill-processes nil)
+(setq confirm-kill-processes t)
 
 ;; Configure pyright
 (after! lsp-pyright
   (setq lsp-pyright-multi-root nil))
+
+(require 'multiple-cursors)
+
+;; Basic multi-cursor commands
+(global-set-key (kbd "C-c m l") 'mc/edit-lines)           ; cursor on each line
+(global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)  ; mark next occurrence
+(global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this) ; mark previous
+(global-set-key (kbd "C-c m a") 'mc/mark-all-like-this)   ; mark all occurrences
+
+;; Rectangular region mode (super useful!)
+(global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
+
+;; Skip current and mark next
+(global-set-key (kbd "C-c m s") 'mc/skip-to-next-like-this)
+
+;; Insert numbers at cursors (0, 1, 2...)
+(global-set-key (kbd "C-c m i") 'mc/insert-numbers)
+
+;; Sort regions by multi-cursor
+(global-set-key (kbd "C-c m o") 'mc/sort-regions)
