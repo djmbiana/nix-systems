@@ -38,25 +38,45 @@
   };
 
   # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  # You can disable this if you're only using the Wayland media-session
 
-  # Enables hyprland
+  # Display and Window Management
+  services = {
+  # X11 Server
+  xserver = {
+    enable = true;
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 35;
+    
+    # Window Manager - XMonad
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = hpkgs: [
+        hpkgs.xmonad
+        hpkgs.xmonad-extras
+        hpkgs.xmonad-contrib
+      ];
+    };
+    
+    # Wallpaper on session start
+    displayManager.sessionCommands = ''
+      xwallpaper --zoom ~/Pictures/wallpaper/castle.jpg
+    '';
+  };
+  
+  # Display Manager
+  displayManager.ly.enable = true;
+  
+  # Compositor
+  picom.enable = true;
+  };
+
+  # Wayland - Hyprland
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
-
-  # Enable xmonad
-  services.xserver.windowManager.xmonad.enable = true;
-  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
-
-  # Enable XFCE
-  # services.xserver.desktopManager.xfce.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.ly.enable = true;
-  services.picom.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
