@@ -149,29 +149,43 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+   # Core utilities
   zsh
   git
   vim
   wget
   ffmpeg
-  xfce.thunar
-  waybar
-  grim
-  slurp
-  foot
-  hyprpaper
-  tealdeer
   curl
-  vlc
-  wtype
-  wl-clipboard
-  xclip
-  wlogout
+  tealdeer
   bat
-  picom
-  xmobar
-  haskell-language-server
+  vlc
+  
+  # File management
+  xfce.thunar
+  
+  # Terminal emulator (works on both X11 and Wayland)
   alacritty
+  foot
+  
+  # Development tools
+  haskell-language-server
+  
+  # --- Wayland (Hyprland) utilities ---
+  waybar          # status bar
+  grim            # screenshots
+  slurp           # region selection for screenshots
+  hyprpaper       # wallpaper
+  wtype           # typing automation
+  wl-clipboard    # clipboard management
+  wlogout         # logout menu
+  
+  # --- X11 (XMonad) utilities ---
+  picom           # compositor
+  xmobar          # status bar
+  maim            # screenshots
+  xwallpaper      # wallpaper
+  xclip           # clipboard management
+  
   ];
 
   # List services that you want to enable:
