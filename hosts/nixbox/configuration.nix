@@ -150,10 +150,7 @@
   # Terminal emulator (works on both X11 and Wayland)
   alacritty
   foot
-  
-  # Development tools
-  haskell-language-server
-  
+
   # --- Wayland (Hyprland) utilities ---
   waybar          # status bar
   grim            # screenshots
