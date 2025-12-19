@@ -1,0 +1,122 @@
+{ config, pkgs, ... }:
+
+let
+  dotfiles = "${config.home.homeDirectory}/nix-systems/config";
+  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+in 
+
+{
+  home.username = "marie";
+  home.homeDirectory = "/home/marie";
+  programs.git.enable = true;
+  home.stateVersion = "25.11";
+
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Arc-Dark";
+      package = pkgs.arc-theme;
+    };
+    iconTheme = {
+      name = "Tela-dark";  # You already have tela-icon-theme
+      package = pkgs.tela-icon-theme;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+ home.packages = with pkgs; [
+   neovim
+   emacs
+   zip 
+   unzip
+   p7zip
+   file-roller
+   stylua
+   ripgrep
+   mpv
+   yt-dlp
+   cmatrix
+   pipes
+   btop
+   xfce.thunar-volman
+   xfce.thunar-archive-plugin
+   xfce.thunar-media-tags-plugin
+   arc-theme
+   tela-icon-theme
+   jq
+   ffmpegthumbnailer
+   pwvucontrol
+   nil
+   nixpkgs-fmt
+   imagemagick
+   poppler-utils
+   fd
+   gnutar
+   cmake
+   libtool
+   libvterm
+   vips
+   rofi
+   gnumake
+   nodejs
+   gcc
+   fd
+   lsd
+   fastfetch
+   ungoogled-chromium
+ ];
+
+ programs = {
+    zsh = {
+        enable = true;
+        syntaxHighlighting.enable = true;
+        oh-my-zsh = {
+            enable = true;
+            theme = "";
+            plugins = [
+                "git"
+                "npm"
+                "history"
+                "node"
+                "rust"
+                "deno"
+            ];
+        };
+        # Custom shell aliases (must be at the zsh level)
+        shellAliases = {
+          e = "emacsclient";
+          ls = "lsd -Fal";
+          nr = "sudo nixos-rebuild switch --flake ~/nix-systems#anathema";
+          nru = "sudo nixos-rebuild switch --flake ~/nix-systems#anathema --upgrade";
+          nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#anathema --show-trace";
+          hmu = "home-manager switch --flake ~/nix-systems#anathema";
+          vim = "nvim";
+          ns1 = "cd ~/nix-systems/hosts/anathema/";
+          nsc = "cd ~/nix-systems/config/";
+          ff = "fastfetch";
+        };
+        sessionVariables = {
+          MANPAGER = "nvim +Man!";
+          BAT_THEME = "gruvbox-dark";
+        };
+
+      initContent = ''
+        autoload -U colors && colors
+        PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M \
+        %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+      '';
+    };
+
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;   # if you use zsh
+      nix-direnv.enable = true;
+    };
+  };
+}
