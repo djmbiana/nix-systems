@@ -13,6 +13,8 @@ let
      src = /home/marie/nix-systems/config/dmenu;
     });
 
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
