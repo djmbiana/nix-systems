@@ -9,7 +9,7 @@ let
     src = ../../config/st;
    });
 
-   mydmenu = pkgs.st.overrideAttrs (oldAttrs: {
+   mydmenu = pkgs.dmenu.overrideAttrs (oldAttrs: {
      src = ../../config/dmenu;
     });
 
