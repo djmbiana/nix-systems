@@ -70,6 +70,19 @@ in
    lsd
    fastfetch
    ungoogled-chromium
+
+   # === Custom ST Terminal ===
+   (st.overrideAttrs (oldAttrs: rec {
+     name = "st-custom";
+     src = pkgs.fetchFromGitHub {
+       owner = "suckless";
+       repo = "st";
+       rev = "0.9.8"; # or latest stable release
+       sha256 = lib.fakeSha256; # Nix will tell you correct hash
+     };
+     patches = [ "${config.home.homeDirectory}/nix-systems/config/st-config.patch" ];
+   }))
+
  ];
 
  programs = {
