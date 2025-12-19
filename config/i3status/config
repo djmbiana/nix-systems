@@ -1,0 +1,44 @@
+# i3status configuration file
+# See "man i3status" for documentation.
+
+general {
+    colors = true
+    interval = 5
+    color_good = "#A3BE8C"
+    color_bad = "#BF616A"
+    color_degraded = "#EBCB8B"
+}
+
+order += "volume master"
+order += "memory"
+order += "battery all"
+order += "tztime local"
+
+volume master {
+    format = "VOL: %volume"
+    format_muted = "VOL: %volume"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+memory {
+    format = "RAM: %used/%total"
+    threshold_degraded = "10%"
+    threshold_critical = "5%"
+}
+
+battery all {
+    format = "BAT: %status %percentage"
+    format_down = "No battery"
+    status_chr = ""
+    status_bat = ""
+    status_unk = ""
+    status_full = ""
+    low_threshold = 20
+    threshold_type = percentage
+}
+
+tztime local {
+    format = " %I:%M %p  %m/%d/%Y"
+}

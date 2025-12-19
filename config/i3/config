@@ -1,0 +1,297 @@
+# ==================================================
+# i3wm Configuration - ThinkPad T480 (NixOS)
+# ==================================================
+
+# -------------------------------
+# Core Settings
+# -------------------------------
+
+# Mod key (Super/Windows key)
+set $mod Mod4
+
+# Font for window titles and bar
+font pango:UbuntuMono Nerd Font 11
+
+# Border settings - visible but not chunky
+default_border pixel 2
+default_floating_border pixel 2
+
+# Hide edge borders when only one window
+hide_edge_borders smart
+
+# -------------------------------
+# Nord Color Scheme
+# -------------------------------
+
+# Nord palette
+set $nord0  #2E3440
+set $nord1  #3B4252
+set $nord2  #434C5E
+set $nord3  #4C566A
+set $nord4  #D8DEE9
+set $nord5  #E5E9F0
+set $nord6  #ECEFF4
+set $nord7  #8FBCBB
+set $nord8  #88C0D0
+set $nord9  #81A1C1
+set $nord10 #5E81AC
+set $nord11 #BF616A
+set $nord12 #D08770
+set $nord13 #EBCB8B
+set $nord14 #A3BE8C
+set $nord15 #B48EAD
+
+# Window colors
+# class                 border   backgr.  text    indicator child_border
+client.focused          $nord8   $nord0   $nord6  $nord8    $nord8
+client.focused_inactive $nord3   $nord0   $nord4  $nord3    $nord3
+client.unfocused        $nord1   $nord0   $nord4  $nord1    $nord1
+client.urgent           $nord11  $nord0   $nord6  $nord11   $nord11
+client.placeholder      $nord0   $nord0   $nord4  $nord0    $nord0
+client.background       $nord0
+
+# -------------------------------
+# Application Shortcuts
+# -------------------------------
+
+# Terminal
+bindsym $mod+t exec st
+
+# File manager
+bindsym $mod+e exec thunar
+
+# Application launcher (dmenu with Nord colors)
+bindsym $mod+d exec dmenu_run -nb '$nord0' -nf '$nord4' -sb '$nord8' -sf '$nord0' -fn 'UbuntuMono Nerd Font-11'
+
+# ========== YOUR CUSTOM APPLICATION BINDS HERE ==========
+# Add your favorite applications below
+# Examples:
+# bindsym $mod+w exec firefox
+# bindsym $mod+Shift+w exec chromium
+# bindsym $mod+c exec code
+# bindsym $mod+m exec spotify
+
+
+
+
+
+# ========================================================
+
+# -------------------------------
+# Window Management
+# -------------------------------
+
+# Kill focused window
+bindsym $mod+q kill
+
+# Change focus (vim-style)
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Alternatively, arrow keys
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window (vim-style)
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Alternatively, arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split orientation
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+# Fullscreen toggle
+bindsym $mod+f fullscreen toggle
+
+# Change container layout
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
+
+# Toggle floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling/floating
+bindsym $mod+space focus mode_toggle
+
+# Focus parent/child container
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+# -------------------------------
+# Workspaces
+# -------------------------------
+
+# Define workspace names
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# ========== YOUR CUSTOM WORKSPACE ASSIGNMENTS HERE ==========
+# Assign applications to specific workspaces
+# Examples:
+# assign [class="firefox"] $ws2
+# assign [class="code"] $ws3
+# assign [class="Spotify"] $ws9
+
+
+
+
+
+# ============================================================
+
+# -------------------------------
+# Resize Mode
+# -------------------------------
+
+mode "resize" {
+    # Vim-style resize
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    # Arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    # Return to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# -------------------------------
+# i3 Control
+# -------------------------------
+
+# Reload configuration
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace
+bindsym $mod+Shift+r restart
+
+# Exit i3
+bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+
+# -------------------------------
+# Status Bar
+# -------------------------------
+
+bar {
+    status_command i3status
+    position bottom
+    font pango:UbuntuMono Nerd Font 11
+    tray_output primary
+    tray_padding 2
+    separator_symbol " │ "
+    
+    colors {
+        background $nord0
+        statusline $nord4
+        separator  $nord3
+
+        # workspace colors:  border   backgr.  text
+        focused_workspace    $nord8   $nord8   $nord0
+        active_workspace     $nord3   $nord1   $nord4
+        inactive_workspace   $nord1   $nord0   $nord4
+        urgent_workspace     $nord11  $nord11  $nord0
+        binding_mode         $nord13  $nord13  $nord0
+    }
+}
+
+# ========== YOUR CUSTOM BINDS & SETTINGS HERE ==========
+# Add any additional custom keybindings below
+# Examples for common functions:
+
+# Screenshot (requires scrot or similar)
+# bindsym Print exec scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/'
+# bindsym $mod+Print exec scrot -u '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/'
+
+# Volume control (requires pulseaudio)
+# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+# bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Brightness control (requires light or brightnessctl)
+# bindsym XF86MonBrightnessUp exec light -A 5
+# bindsym XF86MonBrightnessDown exec light -U 5
+
+# Lock screen (requires i3lock or similar)
+# bindsym $mod+x exec i3lock -c 000000
+
+
+
+
+
+# ========================================================
+
+# -------------------------------
+# Autostart Applications
+# -------------------------------
+
+# ========== YOUR AUTOSTART APPLICATIONS HERE ==========
+# Start applications automatically when i3 starts
+# Network manager applet (clickable network icon in system tray)
+exec_always --no-startup-id nm-applet
+exec --no-startup-id feh --bg-scale /home/marie/Pictures/TranscodedWallpaper.jpg
+exec --no-startup-id setxbmap -option ctrl:swapcaps
+
+# Examples:
+# exec_always --no-startup-id ~/.config/polybar/launch.sh
+# exec --no-startup-id nitrogen --restore
+# exec --no-startup-id picom
+# exec --no-startup-id blueman-applet
+
+
+
+
+
+# ======================================================
