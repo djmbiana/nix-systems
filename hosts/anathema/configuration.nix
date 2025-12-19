@@ -60,7 +60,7 @@
     };
 
   # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.ly.enable = true;
+  displayManager.ly.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
   # Configure keymap in X11
