@@ -26,7 +26,7 @@
       ];
     };
 
-    nixosConfigurations.nixpad = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.anathema = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hosts/nixpad/configuration.nix
@@ -36,7 +36,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.marie = import ./hosts/nixpad/home.nix;  # or whatever your username is on the laptop
+            users.marie = import ./hosts/anathema/home.nix;  # or whatever your username is on the laptop
             backupFileExtension = "backup";
           };
         }
