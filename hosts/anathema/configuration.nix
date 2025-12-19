@@ -172,6 +172,7 @@ in
      xdg-desktop-portal-gtk
      ];
      config.common.default = "*"
+     };
 
      programs.dconf.enable = true;
 }
