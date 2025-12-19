@@ -154,6 +154,7 @@ in
   pavucontrol
   networkmanagerapplet
   xfce.thunar
+  feh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
