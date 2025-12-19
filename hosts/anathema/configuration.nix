@@ -17,6 +17,8 @@
   networking.hostName = "anathema"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -45,6 +47,8 @@
   # Enable the X11 windowing system.
   services.xserver = {
      enable = true;
+     autoRepeatDelay = 200;
+     autoRepeatInterval = 35;
      windowManager.i3 = {
        enable = true;
        extraPackages = with pkgs; [
@@ -109,6 +113,17 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Fonts
+    fonts = {
+      fontDir.enable = true;
+      packages = with pkgs; [
+         nerd-fonts.hack
+         nerd-fonts.iosevka
+         nerd-fonts.ubuntu
+         nerd-fonts.ubuntu-mono
+        ];
+       };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -136,6 +151,7 @@
   # };
 
   # List services that you want to enable:
+  services.flatpak.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -144,7 +160,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
