@@ -171,9 +171,10 @@ in
     extraPortals = with pkgs; [
      xdg-desktop-portal-gtk
      ];
+     config.common.default = "*"
 
      programs.dconf.enable = true;
-
+}
   
 
   # Enable the OpenSSH daemon.
