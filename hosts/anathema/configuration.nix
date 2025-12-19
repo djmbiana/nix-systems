@@ -53,7 +53,7 @@
        enable = true;
        extraPackages = with pkgs; [
          dmenu
-         polybar
+         i3status
          i3lock
         ];
       };
