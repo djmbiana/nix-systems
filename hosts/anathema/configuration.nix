@@ -4,6 +4,15 @@
 
 { config, pkgs, ... }:
 
+let 
+  myst = pkgs.st.overrideAttrs (oldAttrs: {
+    src = /home/marie/nix-systems/config/st;
+   });
+
+   mydmenu = pkgs.st.overrideAttrs (oldAttrs: {
+     src = /home/marie/nix-systems/config/dmenu;
+    });
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -52,7 +61,6 @@
      windowManager.i3 = {
        enable = true;
        extraPackages = with pkgs; [
-         dmenu
          i3status
          i3lock
         ];
@@ -136,7 +144,8 @@
   tealdeer
   bat
   xterm
-  st
+  myst
+  mydmenu
   xclip
   maim
   brightnessctl
@@ -154,8 +163,14 @@
   # };
 
   # List services that you want to enable:
-  # services.flatpak.enable = true;
-  # xdg.portal.enable = true;
+  services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+     xdg-desktop-portal-gtk
+     ];
+
+     programs.dconf.enable = true;
 
   
 
