@@ -155,6 +155,7 @@
 
   # List services that you want to enable:
   services.flatpak.enable = true;
+  xdg.portal.enable = true;
 
   
 
