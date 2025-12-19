@@ -156,13 +156,6 @@
   # List services that you want to enable:
   services.flatpak.enable = true;
 
-  # configuration.nix
-  xdg.portal.enable = true;
-
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gtk
-  ];
-
   
 
   # Enable the OpenSSH daemon.
