@@ -60,7 +60,8 @@
     };
 
   # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.greetd.enable = true;
+  
+  services.displayManager.ly.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
   # Configure keymap in X11
@@ -134,12 +135,14 @@
   curl
   tealdeer
   bat
+  xterm
   st
   xclip
   maim
   brightnessctl
   pavucontrol
   networkmanagerapplet
+  xfce.thunar
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
