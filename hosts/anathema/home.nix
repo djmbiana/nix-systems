@@ -11,7 +11,7 @@ in
   programs.git.enable = true;
   home.stateVersion = "25.11";
 
-  dconf.enable = true;
+  dconf.enable = false;
 
   gtk = {
     enable = true;
