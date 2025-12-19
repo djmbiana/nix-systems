@@ -104,8 +104,8 @@
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  # Install firefox. firefox why :(
+  # programs.firefox.enable = true;
 
   # waybar
   programs.waybar.enable = false;
