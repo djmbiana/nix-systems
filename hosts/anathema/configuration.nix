@@ -6,11 +6,11 @@
 
 let 
   myst = pkgs.st.overrideAttrs (oldAttrs: {
-    src = /home/marie/nix-systems/config/st;
+    src = ../../config/st;
    });
 
    mydmenu = pkgs.st.overrideAttrs (oldAttrs: {
-     src = /home/marie/nix-systems/config/dmenu;
+     src = ../../config/dmenu;
     });
 
 in
