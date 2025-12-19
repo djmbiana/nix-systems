@@ -166,15 +166,16 @@ in
 
   # List services that you want to enable:
   services.flatpak.enable = true;
+  
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-     xdg-desktop-portal-gtk
-     ];
-     config.common.default = "*"
-     };
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "*";
+  };
 
-     programs.dconf.enable = true;
+  programs.dconf.enable = true;
 
   
 
