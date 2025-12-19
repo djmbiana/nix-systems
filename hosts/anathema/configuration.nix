@@ -175,7 +175,7 @@ in
      };
 
      programs.dconf.enable = true;
-}
+
   
 
   # Enable the OpenSSH daemon.
