@@ -108,6 +108,7 @@ in
    udiskie
    brave
    typst
+   tinymist
    (vimPlugins.nvim-treesitter.withPlugins (p: [
   p.lua
   p.nix
