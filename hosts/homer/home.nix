@@ -100,7 +100,6 @@ in
    vips
    rofi
    gnumake
-   nodejs
    gcc
    fd
    lsd
@@ -108,6 +107,7 @@ in
    bibata-cursors
    udiskie
    brave
+   typst
    (vimPlugins.nvim-treesitter.withPlugins (p: [
   p.lua
   p.nix
@@ -117,6 +117,7 @@ in
   p.yaml
   p.ini
   p.python
+  p.typst
    ]))
  ];
 
