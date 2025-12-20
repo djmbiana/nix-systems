@@ -106,7 +106,7 @@ in
    lsd
    fastfetch
    bibata-cursors
-   posy-cursors
+   udiskie
    ungoogled-chromium
    (vimPlugins.nvim-treesitter.withPlugins (p: [
   p.lua
