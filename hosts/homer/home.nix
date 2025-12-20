@@ -60,10 +60,10 @@ in
     recursive = true;
   };
 
-  # xdg.configFile."nvim" = {
-    # source = create_symlink "${dotfiles}/nvim/";
-    # recursive = true;
-  # };
+  xdg.configFile."nvim" = {
+    source = create_symlink "${dotfiles}/nvim/";
+    recursive = true;
+   };
   
 
  home.packages = with pkgs; [
