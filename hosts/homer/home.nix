@@ -108,6 +108,16 @@ in
    bibata-cursors
    posy-cursors
    ungoogled-chromium
+   (vimPlugins.nvim-treesitter.withPlugins (p: [
+  p.lua
+  p.nix
+  p.bash
+  p.markdown
+  p.json
+  p.yaml
+  p.ini
+  p.python
+   ]))
  ];
 
  programs = {
