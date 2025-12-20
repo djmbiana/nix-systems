@@ -31,19 +31,23 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Plugin setup
+-- plugins
 require("lazy").setup({
-  -- Colorscheme
+  -- colorscheme
   {
-    "rose-pine/neovim",
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme("rose-pine")
-    -- vim.cmd.colorscheme("rose-pine-main")
-    -- vim.cmd.colorscheme("rose-pine-moon")
-    -- vim.cmd.colorscheme("rose-pine-dawn")  -- light theme
+      vim.cmd.colorscheme("catppuccin-mocha")
+      -- Other variants:
+      -- vim.cmd.colorscheme("catppuccin-latte")  -- light
+      -- vim.cmd.colorscheme("catppuccin-frappe") -- dark
+      -- vim.cmd.colorscheme("catppuccin-macchiato") -- dark
     end,
   },
+
+
 
   {
     'nvim-telescope/telescope.nvim',
