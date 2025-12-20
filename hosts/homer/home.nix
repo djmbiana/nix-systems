@@ -130,12 +130,12 @@ in
         shellAliases = {
           e = "emacsclient";
           ls = "lsd -Fal";
-          nr = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox";
-          nru = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --upgrade";
-          nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#nixbox --show-trace";
-          hmu = "home-manager switch --flake ~/nix-systems#nixbox";
+          nr = "sudo nixos-rebuild switch --flake ~/nix-systems#homer";
+          nru = "sudo nixos-rebuild switch --flake ~/nix-systems#homer --upgrade";
+          nrt = "sudo nixos-rebuild switch --flake ~/nix-systems#homer --show-trace";
+          hmu = "home-manager switch --flake ~/nix-systems#homer";
           vim = "nvim";
-          ns1 = "cd ~/nix-systems/hosts/nixbox/";
+          ns1 = "cd ~/nix-systems/hosts/homer/";
           nsc = "cd ~/nix-systems/config/";
           ff = "fastfetch";
         };

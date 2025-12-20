@@ -9,17 +9,17 @@
     
   };
   outputs = { self, nixpkgs, home-manager, ... }: {
-    nixosConfigurations.nixbox = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.homer = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hosts/nixbox/configuration.nix
+        ./hosts/homer/configuration.nix
         
         home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.marie = import ./hosts/nixbox/home.nix;
+            users.marie = import ./hosts/homer/home.nix;
             backupFileExtension = "backup";
           };
         }
