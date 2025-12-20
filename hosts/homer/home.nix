@@ -154,7 +154,7 @@ in
           BAT_THEME = "Catppuccin Mocha";
         };
 
-        initExtra = ''
+        initContent = ''
           man() {
             if [[ -n "$INSIDE_EMACS" ]]; then
               emacsclient -e "(woman \"$1\")"
