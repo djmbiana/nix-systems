@@ -107,7 +107,7 @@ in
    fastfetch
    bibata-cursors
    udiskie
-   ungoogled-chromium
+   brave
    (vimPlugins.nvim-treesitter.withPlugins (p: [
   p.lua
   p.nix
