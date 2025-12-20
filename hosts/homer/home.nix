@@ -38,7 +38,7 @@ in
 
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";  # Change to Bibata-Modern-Ice for white cursor
+    name = "Bibata-Modern";  # Change to Bibata-Modern-Ice for white cursor
     size = 24;
     gtk.enable = true;
     x11.enable = true;
@@ -150,16 +150,24 @@ in
           ff = "fastfetch";
         };
         sessionVariables = {
-          MANPAGER = "nvim +Man!";
-          BAT_THEME = "gruvbox-dark";
+          # MANPAGER = "nvim +Man!";
+          BAT_THEME = "Catppuccin Mocha";
         };
 
-      initContent = ''
-        autoload -U colors && colors
-        PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M \
-        %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-      '';
-    };
+        initExtra = ''
+          man() {
+            if [[ -n "$INSIDE_EMACS" ]]; then
+              emacsclient -e "(woman \"$1\")"
+            else
+              command man "$@"
+            fi
+          }
+          
+          # Custom prompt
+          autoload -U colors && colors
+          PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+        '';
+          };
 
     direnv = {
       enable = true;
