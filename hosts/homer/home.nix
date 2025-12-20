@@ -38,7 +38,7 @@ in
 
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
-    name = "Bibata-Modern";  # Change to Bibata-Modern-Ice for white cursor
+    name = "Bibata-Modern-Classic";  # Change to Bibata-Modern-Ice for white cursor
     size = 24;
     gtk.enable = true;
     x11.enable = true;
