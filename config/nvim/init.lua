@@ -34,16 +34,14 @@ vim.opt.rtp:prepend(lazypath)
 -- plugins
 require("lazy").setup({
   -- colorscheme
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    {
+    "ellisonleao/gruvbox.nvim",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme("catppuccin-mocha")
-      -- Other variants:
-      -- vim.cmd.colorscheme("catppuccin-latte")  -- light
-      -- vim.cmd.colorscheme("catppuccin-frappe") -- dark
-      -- vim.cmd.colorscheme("catppuccin-macchiato") -- dark
+      require("gruvbox").setup({
+        contrast = "", -- can be "hard", "soft" or empty string
+      })
+      vim.cmd.colorscheme("gruvbox")
     end,
   },
 

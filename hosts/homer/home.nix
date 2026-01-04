@@ -96,6 +96,7 @@ in
    gnutar
    cmake
    libtool
+   caligula
    libvterm
    vips
    rofi
@@ -118,7 +119,6 @@ in
   p.yaml
   p.ini
   p.python
-  p.typst
    ]))
  ];
 
